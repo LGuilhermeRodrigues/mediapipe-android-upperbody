@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Upper Body</string>
+    <string name="no_camera_access">Sem acesso à câmera</string>
 </resources>
