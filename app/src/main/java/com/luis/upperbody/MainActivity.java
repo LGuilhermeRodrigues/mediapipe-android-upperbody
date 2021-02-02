@@ -4,8 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Size;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
         processor
                 .getVideoSurfaceOutput()
                 .setFlipY(FLIP_FRAMES_VERTICALLY);
-
         PermissionHelper.checkAndRequestCameraPermissions(this);
     }
 
@@ -88,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 new ExternalTextureConverter(
                         eglManager.getContext(), 2);
         converter.setFlipY(FLIP_FRAMES_VERTICALLY);
+        converter.setRotation(Surface.ROTATION_90);
         converter.setConsumer(processor);
         if (PermissionHelper.cameraPermissionsGranted(this)) {
             startCamera();
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 surfaceTexture -> {
                     onCameraStarted(surfaceTexture);
                 });
-        cameraHelper.startCamera(this, CameraHelper.CameraFacing.FRONT, null, cameraTargetResolution());
+        cameraHelper.startCamera(this, CameraHelper.CameraFacing.BACK, null, cameraTargetResolution());
     }
 
     protected Size computeViewSize(int width, int height) {
